@@ -82,6 +82,7 @@ def update_address():
 
     address_id = root.find('.address/id').text
     
+    print("AddressId exists:")
     print(address_id)
 
     # Підготовка даних для відправки
@@ -119,7 +120,8 @@ def update_address():
 
 
 def delete_address():
-    url = basic_url + 'addresses/39'
+    id_to_delete = '39'
+    url = basic_url + 'addresses/' + id_to_delete
     response = requests.delete(url, auth=basic_auth)
 
     # Перевіряємо, що статус код відповіді дорівнює 200
