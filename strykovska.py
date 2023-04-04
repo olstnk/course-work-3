@@ -68,3 +68,51 @@ def test_create_address():
     # виведення результату
     print(response.status_code)
     print(data)
+
+
+def update_address():
+    updated_id = '4256'
+
+    # Отримуємо ID ресурсу
+    url = basic_url + 'addresses/' + updated_id
+    
+    response = requests.get(url, auth=basic_auth)
+    data = response.content
+    root = ET.fromstring(data)
+
+    address_id = root.find('.address/id').text
+    
+    print(address_id)
+
+    # Підготовка даних для відправки
+    headers = {'Content-Type': 'application/xml'}
+    payload = """
+<prestashop>
+    <address>
+        <id required="true" format="isUnsignedId">""" + updated_id + """</id>
+        <id_country required="true" format="isUnsignedId">5</id_country>
+        <alias required="true" maxSize="32" format="isGenericName">
+            testA
+        </alias>
+        <lastname required="true" maxSize="255" format="isName">
+            testA
+        </lastname>
+        <firstname required="true" maxSize="255" format="isName">
+            testA
+        </firstname>
+        <address1 required="true" maxSize="128" format="isAddress">
+            testA
+        </address1>
+        <city required="true" maxSize="64" format="isCityName">
+            testA
+        </city>
+    </address>
+</prestashop>
+    """
+
+    # Відправляємо запит PUT
+    response = requests.put(post_url, headers=headers, data=payload, auth=basic_auth)
+    
+    # Перевіряємо відповідь сервера
+    assert response.status_code == 200, f"Response status code was {response.status_code}."
+    print(response.content)
