@@ -116,3 +116,12 @@ def update_address():
     # Перевіряємо відповідь сервера
     assert response.status_code == 200, f"Response status code was {response.status_code}."
     print(response.content)
+
+
+def delete_address():
+    url = basic_url + 'addresses/39'
+    response = requests.delete(url, auth=basic_auth)
+
+    # Перевіряємо, що статус код відповіді дорівнює 200
+    assert response.status_code == 200, f"Response status code was {response.status_code}"
+    print("Address was deleted successfully")
