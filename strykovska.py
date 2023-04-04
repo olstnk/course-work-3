@@ -6,8 +6,8 @@ basic_auth = HTTPBasicAuth('1VQDHXQ8EF73QTHESPT7UHU9AJQPLXXL', '')
 basic_url = 'http://164.92.218.36:8080/api/'
 
 def test_get_address():
-    adrress_id = '9'
-    expected_id = '9'
+    adrress_id = '5'
+    expected_id = '5'
     url = basic_url + 'addresses/' + adrress_id
     response = requests.get(url, auth=basic_auth)
 
@@ -22,7 +22,6 @@ def test_get_address():
     # Парсимо XML та перевіряємо, що отримані дані містять очікувані значення
     root = ET.fromstring(data)
 
-    root = ET.fromstring(data)
     id_element = root.find('address/id')
     id_value = id_element.text
 
