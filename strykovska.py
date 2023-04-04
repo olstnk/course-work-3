@@ -27,3 +27,44 @@ def test_get_address():
     id_value = id_element.text
 
     assert id_value == expected_id, f"Response data was {id_value}, expected {expected_id}"
+
+
+post_url = basic_url + 'addresses'
+
+def test_create_address():
+    # створення елементу ХМЛ з даними адреси
+    root = ET.Element('prestashop')
+    address = ET.SubElement(root, 'address')
+    
+    ET.SubElement(address, 'id_country').text = '14'
+    ET.SubElement(address, 'alias').text = '14'
+    ET.SubElement(address, 'lastname').text = 'Doe'
+    ET.SubElement(address, 'firstname').text = 'John'
+    ET.SubElement(address, 'address1').text = '123 Main St'
+    ET.SubElement(address, 'city').text = 'Anytown'
+
+    # перетворення елементу ХМЛ до рядку
+    xml_data = ET.tostring(root)
+
+    # відправлення POST запиту
+    response = requests.post(post_url, data=xml_data, auth=basic_auth, headers={'Content-Type': 'application/xml'})
+
+    # Перевіряємо, що статус код відповіді дорівнює 201 (створено)
+    assert response.status_code == 201, f"Response status code was {response.status_code}"
+
+    # отримання створеної адреси у форматі ХМЛ
+    data = response.content
+    assert data, "Response data was empty"
+
+    # Парсимо ХМЛ та перевіряємо, що отримані дані містять очікувані значення
+    root = ET.fromstring(data)
+    assert root.find('address/alias').text == '14'
+    assert root.find('address/id_country').text == '14'
+    assert root.find('address/lastname').text == 'Doe'
+    assert root.find('address/firstname').text == 'John'
+    assert root.find('address/address1').text == '123 Main St'
+    assert root.find('address/city').text == 'Anytown'
+
+    # виведення результату
+    print(response.status_code)
+    print(data)
