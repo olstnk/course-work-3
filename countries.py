@@ -1,14 +1,13 @@
-from requests.auth import HTTPBasicAuth
 import requests
 import xml.etree.ElementTree as ET
+from auth import basic_auth, basic_url
 
-basic_auth = HTTPBasicAuth('1VQDHXQ8EF73QTHESPT7UHU9AJQPLXXL', '')
-basic_url = 'http://164.92.218.36:8080/api/countries/'
+url = basic_url + 'countries'
 
 def get_country_test():
     country_id = '388'
     expected_country_name = 'Portuguese'
-    response = requests.get(basic_url + country_id, auth=basic_auth)
+    response = requests.get(url + country_id, auth=basic_auth)
 
     assert response.status_code == 200, f"Response status code was {response.status_code}"
 
@@ -37,7 +36,7 @@ def create_country_test():
     </prestashop>
     """
 
-    response = requests.post(basic_url, headers=headers, data=body, auth=basic_auth)
+    response = requests.post(url, headers=headers, data=body, auth=basic_auth)
     print(response.content)
 
     assert response.status_code == 201, f"Response status code was {response.status_code}"

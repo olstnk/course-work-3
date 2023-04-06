@@ -1,9 +1,8 @@
-from requests.auth import HTTPBasicAuth
 import requests
 import xml.etree.ElementTree as ET
+from auth import basic_auth, basic_url
 
-basic_auth = HTTPBasicAuth('1VQDHXQ8EF73QTHESPT7UHU9AJQPLXXL', '')
-basic_url = 'http://164.92.218.36:8080/api/contacts/'
+url = basic_url + 'contacts'
 
 def create_contact_test(): 
     headers = {'Content-Type': 'application/xml'}
@@ -24,7 +23,7 @@ def create_contact_test():
     </prestashop>
     """
 
-    response = requests.post(basic_url, headers=headers, data=body, auth=basic_auth)
+    response = requests.post(url, headers=headers, data=body, auth=basic_auth)
 
     assert response.status_code == 201, f"Response status code was {response.status_code}"
 
