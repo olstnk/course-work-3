@@ -15,12 +15,11 @@ def get_product_test():
     data = response.content
     parsed_data = ET.fromstring(data)
     reference = parsed_data.find('product/reference').text
-    print('!!!!')
 
     assert reference == expected_reference, f"Response reference was {reference}, expected {expected_reference}"
 
 def delete_product_test():
-    product_id = '10'
+    product_id = '12'
     response = requests.delete(basic_url + product_id, auth=basic_auth)
 
     assert response.status_code == 200, f"Response status code was {response.status_code}"

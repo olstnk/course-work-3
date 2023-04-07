@@ -2,7 +2,7 @@ import requests
 import xml.etree.ElementTree as ET
 from auth import basic_auth, basic_url
 
-url = basic_url + 'countries'
+url = basic_url + 'countries/'
 
 def get_country_test():
     country_id = '388'
@@ -42,7 +42,7 @@ def create_country_test():
     assert response.status_code == 201, f"Response status code was {response.status_code}"
 
 
-get_country_test()
-create_country_test()
+#get_country_test()
+#create_country_test()
 
 
