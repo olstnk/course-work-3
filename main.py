@@ -1,5 +1,8 @@
-import pytest
-import requests
+from products import get_product_test, delete_product_test
+from contacts import create_contact_test
 
-x = requests.get('http://164.92.218.36:8080')
-print(x)
+
+if __name__ == "__main__":
+    get_product_test()
+    delete_product_test()
+    create_contact_test()
